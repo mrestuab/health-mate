@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Form, Input, Button, Col, Layout } from "antd";
+import { Form, Input, Button, Col, Layout, Modal } from "antd";
 import { useNavigate } from 'react-router-dom';
 import cookie from '../../core/helpers/cookie';
 import "./style.css";
@@ -30,7 +30,10 @@ function Profile() {
     async function onFinish(values) {
         const token = cookie.get("access_token"); // Ambil token dari cookie
         if (!token) {
-            alert("Token tidak ditemukan! Silakan login ulang.");
+            Modal.error({
+                title: "Token Tidak Ditemukan",
+                content: "Silakan login ulang.",
+            });
             return;
         }
     
@@ -40,7 +43,7 @@ function Profile() {
             phone_number: values.phone_number,
         };
     
-        console.log("Payload yang dikirim:", JSON.stringify(payload, null, 2)); // Debugging
+        console.log("Payload yang dikirim:", JSON.stringify(payload, null, 2));
     
         try {
             const response = await fetch("http://127.0.0.1:5000/update-profile", {
@@ -50,23 +53,33 @@ function Profile() {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${token}`,
                 },
-                body: JSON.stringify(payload),            
+                body: JSON.stringify(payload),
             });
     
             const result = await response.json();
-            console.log("Response dari server:", result); // Debugging response
+            console.log("Response dari server:", result);
     
             if (response.ok) {
-                alert("Profil berhasil diperbarui!");
-                cookie.set("user", JSON.stringify(result.data), { path: "/", expires: 7 });
-                navigate('/dashboard')
-
+                Modal.success({
+                    title: "Profil Diperbarui",
+                    content: "Profil berhasil diperbarui!",
+                    onOk: () => {
+                        cookie.set("user", JSON.stringify(result.data), { path: "/", expires: 7 });
+                        navigate('/dashboard');
+                    },
+                });
             } else {
-                alert(result.message || "Gagal memperbarui profil.");
+                Modal.error({
+                    title: "Gagal Memperbarui",
+                    content: result.message || "Gagal memperbarui profil.",
+                });
             }
         } catch (error) {
             console.error("Error saat update profile:", error);
-            alert("Terjadi kesalahan saat memperbarui profil.");
+            Modal.error({
+                title: "Terjadi Kesalahan",
+                content: "Terjadi kesalahan saat memperbarui profil.",
+            });
         }
     }
     

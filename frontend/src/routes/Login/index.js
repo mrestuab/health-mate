@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Typography } from 'antd';
+import { Form, Input, Button, Typography, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import cookie from '../../core/helpers/cookie';
 import useLocalData from "../../core/hook/useLocalData";
@@ -16,6 +16,7 @@ function Login() {
         email: values.email,
         password: values.password,
     };
+
     try {
         console.log("Sending data:", payload);
         const response = await fetch("http://localhost:5000/login", {
@@ -51,20 +52,25 @@ function Login() {
             }
 
             if (userData.user_id == 1) {
-                navigate("/admin");
-            } else {
-                navigate("/dashboard");
-            }
+              navigate("/admin");
+          } else {
+              navigate("/dashboard");
+          }
         } else {
             console.error("Login failed:", result);
-            alert(result.message || "Login failed!");
+            Modal.error({
+                title: "Login Gagal",
+                content: result.message || "Login failed!",
+            });
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("Something went wrong. Please try again.");
+        Modal.error({
+            title: "Error",
+            content: "Something went wrong. Please try again.",
+        });
     }
   };
-
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
