@@ -1,13 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Badge, Button, List, notification, Popover } from 'antd';
+import { Modal, List, notification, Popover } from 'antd';
 import { io } from 'socket.io-client';
-import { BellOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from "react-router-dom";
 
 import useLocalData from "../../core/hook/useLocalData";
 import cookie from "../../core/helpers/cookie";
 import "./style.css";
-
 
   // outside of your component, initialize the socket variable
   let socket;
@@ -20,19 +18,24 @@ function Header() {
   console.log("header cuy", userData)
 
   function handleLogout() {
-    cookie.del('user');
-    dispatch({
-      type: 'update',
-      value: null,
-      name: 'userData',
-    });
-    alert('apakah anda yakin untuk logout?')
-    if(socket) {
-      console.log("diskonek"); 
-      socket.disconnect(); 
-      socket = null
-    } 
-    navigate("/login");
+    Modal.confirm({
+      title: 'Logout',
+      content: 'Apakah Anda yakin ingin logout?',
+      okText: 'Ya',
+      cancelText: 'Batal',
+      onOk: () => {
+        cookie.del('user');
+        dispatch({ type: 'update', value: null, name: 'userData' });
+  
+        if (socket) {
+          console.log('diskonek');
+          socket.disconnect();
+          socket = null;
+        }
+  
+        navigate('/login');
+      },
+    })
   }
 
   function handleLogin() {
@@ -75,7 +78,7 @@ function Header() {
   useEffect(() => {
     if (cookieUser && userData) {
 
-      if(userData?.user_id != 400 && !socket) {
+      if(userData?.user_id != 1 && !socket) {
         // create websocket/connect
         socket = io("http://127.0.0.1:5000");
   

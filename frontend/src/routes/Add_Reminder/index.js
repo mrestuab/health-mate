@@ -1,5 +1,5 @@
 import React from "react";    
-import { Form, Input, Button, DatePicker, TimePicker, Row, Col, Layout } from "antd";    
+import { Form, Input, Button, DatePicker, TimePicker, Row, Col, Layout, Modal } from "antd";    
 import { useNavigate } from 'react-router-dom';    
 import moment from "moment";    
 import cookie from '../../core/helpers/cookie';    
@@ -18,7 +18,10 @@ function AddReminder() {
         const userCookie = cookie.get('user');
         console.log("User Cookie:", userCookie);
         if (!userCookie) {
-            alert("User not found. Please log in again.");
+            Modal.error({
+                title: "Error",
+                content: "User not found. Please log in again.",
+            });
             return;
         }
     
@@ -28,13 +31,19 @@ function AddReminder() {
             console.log("Parsed User:", user);
         } catch (error) {
             console.error("Error parsing user cookie:", error);
-            alert("Failed to retrieve user information. Please log in again.");
+            Modal.error({
+                title: "Error",
+                content: "Failed to retrieve user information. Please log in again.",
+            });
             return;
         }
     
         const userId = user.user_id || (user.user && user.user.user_id);
         if (!userId) {
-            alert("User ID not found. Please log in again.");
+            Modal.error({
+                title: "Error",
+                content: "User ID not found. Please log in again.",
+            });
             return;
         }
         console.log("User ID:", userId);
@@ -72,14 +81,20 @@ function AddReminder() {
     
             const data = await response.json();
             console.log("Response:", data);
-            alert("Reminder berhasil disimpan!");
-            navigate('/check-schedule');
+    
+            Modal.success({
+                title: "Success",
+                content: "Reminder berhasil disimpan!",
+                onOk: () => navigate('/check-schedule'),
+            });
         } catch (error) {
             console.error("Error:", error);
-            alert("Gagal menyimpan reminder.");
+            Modal.error({
+                title: "Error",
+                content: "Gagal menyimpan reminder.",
+            });
         }
-    }
-                
+    }           
          
     const disabledDate = (current, selectedDates) => {      
         if (!selectedDates || selectedDates.length === 0) {      
