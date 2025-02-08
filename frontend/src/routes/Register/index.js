@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Typography, message } from 'antd';
+import './style.css'; // Tambahkan file CSS eksternal
 
 const { Title } = Typography;
 
@@ -62,25 +63,8 @@ function Register() {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        minHeight: '100vh',
-      }}
-    >
-      <div
-        style={{
-          flex: 1,
-          backgroundColor: '#F2F9FF',
-          padding: '50px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minWidth: '300px',
-        }}
-      >
+    <div className="register-container">
+      <div className="register-form">
         <Title level={2}>Welcome!</Title>
 
         <Form
@@ -89,7 +73,7 @@ function Register() {
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          style={{ width: '100%', maxWidth: '350px' }}
+          className="form-content"
         >
           <Form.Item
             label="Name"
@@ -133,40 +117,20 @@ function Register() {
           </Form.Item>
 
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              block
-              style={{ marginBottom: '16px' }}
-            >
+            <Button type="primary" htmlType="submit" block>
               Sign Up
             </Button>
           </Form.Item>
         </Form>
 
-        <p style={{ marginTop: '16px' }}>
+        <p>
           Ohh you have an account? <a href="/login">Sign in</a>
         </p>
       </div>
 
-      <div
-        style={{
-          flex: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '50px',
-          minWidth: '300px',
-        }}
-      >
-        <div style={{ textAlign: 'center' }}>
-          <img
-            src="image/medicine.gif"
-            alt="reminder"
-            style={{ width: '100%', maxWidth: '400px' }}
-          />
-          <p>Set your Time to take your medication on Time!</p>
-        </div>
+      <div className="register-image">
+        <img src="image/medicine.gif" alt="reminder" />
+        <p>Set your Time to take your medication on Time!</p>
       </div>
     </div>
   );

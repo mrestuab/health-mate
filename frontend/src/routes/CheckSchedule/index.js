@@ -173,7 +173,11 @@ function CheckSchedule() {
     <Layout style={{ minHeight: "100vh" }}>  
       <Content style={{ padding: "50px", backgroundColor: "#F2F9FF" }}>  
         <h1 className="title">Jadwal Minum Obat</h1>  
-        <Table columns={columns} dataSource={reminders} />  
+        <Table 
+          columns={columns} 
+          dataSource={reminders} 
+          scroll={{ x: "max-content" }} 
+        />
         <Button color="primary" variant="filled" onClick={handleBack}>    
             Back    
         </Button>  

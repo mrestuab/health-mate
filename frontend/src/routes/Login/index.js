@@ -3,6 +3,7 @@ import { Form, Input, Button, Typography, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import cookie from '../../core/helpers/cookie';
 import useLocalData from "../../core/hook/useLocalData";
+import './style.css'; // Tambahkan file CSS eksternal
 
 const { Title, Link } = Typography;
 
@@ -51,7 +52,7 @@ function Login() {
                 });
             }
 
-            if (userData.user_id == 1) {
+            if (userData.user_id === 1) {
               navigate("/admin");
           } else {
               navigate("/dashboard");
@@ -77,12 +78,12 @@ function Login() {
   };
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", minHeight: "100vh" }}>
-      <div style={{ flex: 1, backgroundColor: "#F2F9FF", padding: "50px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minWidth: "300px" }}>
+    <div className="login-container">
+      <div className="login-form-container">
         <Title level={2}>Welcome back</Title>
         <p>Please enter your details</p>
 
-        <Form name="login" layout="vertical" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} style={{ width: "100%", maxWidth: "350px" }}>
+        <Form name="login" layout="vertical" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} className="login-form">
           <Form.Item label="Email address" name="email" rules={[{ required: true, message: "Please input your email!" }, { type: "email", message: "Please enter a valid email!" }]}>
             <Input placeholder="Enter your email" />
           </Form.Item>
@@ -91,40 +92,25 @@ function Login() {
             <Input.Password placeholder="Enter your password" />
           </Form.Item>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+          <div className="forgot-password">
             <Link>Forgot password</Link>
           </div>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block style={{ marginBottom: "16px" }}>
+            <Button type="primary" htmlType="submit" block className="login-button">
               Sign in
             </Button>
           </Form.Item>
         </Form>
 
-        <p style={{ marginTop: "16px" }}>
+        <p className="register-link">
           Don’t have an account? <a href="/register">Sign up</a>
         </p>
       </div>
 
-      <div
-        style={{
-          flex: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '50px',
-          minWidth: '300px',
-        }}
-      >
-        <div style={{ textAlign: 'center' }}>
-          <img
-            src="image/medicine.gif"
-            alt="reminder"
-            style={{ width: '100%', maxWidth: '400px' }}
-          />
-          <p>Set your Time to take your medication on Time!</p>
-        </div>
+      <div className="image-container">
+        <img src="image/medicine.gif" alt="reminder" className="medicine-image" />
+        <p>Set your Time to take your medication on Time!</p>
       </div>
     </div>
   );

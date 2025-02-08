@@ -16,17 +16,19 @@ const Admin = () => {
       });
 
       const result = await response.json();
+      console.log(result); // Cek apakah result.data itu array atau objek
 
-      if (response.ok) {
-        setUsers(  
-          result.data.map((item) => ({  
-            key: item.email,  
-            ...item
-          }))); 
-        // message.success('Users fetched successfully');
+      if (response.ok && Array.isArray(result.data)) {
+        setUsers(
+          result.data.map((item) => ({
+            key: item.email,
+            ...item,
+          }))
+        );
       } else {
-        message.error(result.message || 'Failed to fetch users');
+        message.error(result.message || "Failed to fetch users");
       }
+
     } catch (error) {
       console.error('Error fetching users:', error);
       message.error('Something went wrong while fetching users.');
@@ -79,6 +81,7 @@ const Admin = () => {
         columns={columns}
         dataSource={users}
         loading={loading}
+        scroll={{ x: "max-content", y: 400 }} // 400 bisa diganti sesuai kebutuhan
       />
     </div>
   );

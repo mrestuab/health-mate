@@ -112,59 +112,60 @@ function AddReminder() {
                 <div className="add-reminder-container">    
                     <h1 className="title">Atur Jadwal Minum Obat</h1>    
                     <Form layout="vertical" onFinish={onFinish} form={form} className="form-container">    
-                        <Row gutter={16}>    
-                            <Col span={12}>    
-                                <Form.Item    
-                                    label="Nama Obat"    
-                                    name="medicine_name"    
-                                    rules={[{ required: true, message: "Silakan masukkan nama obat" }]}    
-                                >    
-                                    <Input placeholder="Nama Obat" />    
-                                </Form.Item>    
-    
-                                <Form.Item    
-                                    label="Dosis"    
-                                    name="dosage"    
-                                    rules={[{ required: true, message: "Silakan masukkan dosis" }]}    
-                                >    
-                                    <Input placeholder="Dosis" />    
-                                </Form.Item>    
-    
-                                <Form.Item    
-                                    label="Deskripsi Penggunaan"    
-                                    name="description"    
-                                    rules={[{ required: true, message: "Silakan masukkan deskripsi" }]}    
-                                >    
-                                    <TextArea placeholder="Deskripsi Penggunaan" rows={4} />    
-                                </Form.Item>    
-                            </Col>    
-    
-                            <Col span={12}>    
-                                <Form.Item    
-                                    label="Frekuensi"    
-                                    name="frequency"    
-                                    rules={[{ required: true, message: "Silakan masukkan frekuensi" }]}    
-                                >    
-                                    <Input placeholder="3 kali sehari" />    
-                                </Form.Item>    
-    
-                                <Form.Item    
-                                    label="Waktu"    
-                                    name="reminder_time"    
-                                    rules={[{ required: true, message: "Silakan pilih waktu" }]}    
-                                >    
-                                    <TimePicker format={"HH:mm"} style={{ width: "100%" }} />    
-                                </Form.Item>    
-                                <Form.Item    
-                                    label="Rentang Tanggal"    
-                                    name="start_date"    
-                                    rules={[{ required: true, message: "Silakan pilih rentang tanggal" }]}    
-                                >    
-                                    <DatePicker.RangePicker style={{ width: "100%" }} format={"YYYY-MM-DD"} disabledDate={(current) => disabledDate(current, form.getFieldValue("start_date"))} />    
-                                </Form.Item>    
-                            </Col>    
-                        </Row>    
-    
+                    <Row gutter={[16, 16]} justify="center">
+                        <Col xs={24} md={12}>
+                            <Form.Item
+                                label="Nama Obat"
+                                name="medicine_name"
+                                rules={[{ required: true, message: "Silakan masukkan nama obat" }]}
+                            >
+                                <Input placeholder="Nama Obat" />
+                            </Form.Item>
+
+                            <Form.Item
+                                label="Dosis"
+                                name="dosage"
+                                rules={[{ required: true, message: "Silakan masukkan dosis" }]}
+                            >
+                                <Input placeholder="Dosis" />
+                            </Form.Item>
+
+                            <Form.Item
+                                label="Deskripsi Penggunaan"
+                                name="description"
+                                rules={[{ required: true, message: "Silakan masukkan deskripsi" }]}
+                            >
+                                <TextArea placeholder="Deskripsi Penggunaan" rows={4} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} md={12}>
+                            <Form.Item
+                                label="Frekuensi"
+                                name="frequency"
+                                rules={[{ required: true, message: "Silakan masukkan frekuensi" }]}
+                            >
+                                <Input placeholder="3 kali sehari" />
+                            </Form.Item>
+
+                            <Form.Item
+                                label="Waktu"
+                                name="reminder_time"
+                                rules={[{ required: true, message: "Silakan pilih waktu" }]}
+                            >
+                                <TimePicker format={"HH:mm"} style={{ width: "100%" }} />
+                            </Form.Item>
+
+                            <Form.Item
+                                label="Rentang Tanggal"
+                                name="start_date"
+                                rules={[{ required: true, message: "Silakan pilih rentang tanggal" }]}
+                            >
+                                <DatePicker.RangePicker style={{ width: "100%" }} format={"YYYY-MM-DD"} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    
                         <Form.Item className="button-group">    
                             <Button type="primary" htmlType="submit">    
                                 Simpan    
