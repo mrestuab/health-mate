@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";  
 import { Form, Input, Button, DatePicker, TimePicker, Row, Col, message } from "antd";  
 import moment from "moment";  
-  
+
 const { TextArea } = Input;  
-  
+
 function Update({ reminder, onUpdate }) {  
     const [form] = Form.useForm();  
-  
+
     useEffect(() => {    
         if (reminder) {    
             form.setFieldsValue({    
@@ -22,7 +22,7 @@ function Update({ reminder, onUpdate }) {
             });    
         }    
     }, [reminder, form]);    
-      
+
     async function onFinish(values) {    
         try {    
             const payload = {    
@@ -34,7 +34,7 @@ function Update({ reminder, onUpdate }) {
                 reminder_time: values.reminder_time.format("HH:mm:ss"),    
                 description: values.description,    
             };    
-        
+
             const response = await fetch(`http://127.0.0.1:5000/reminder/${reminder.key}`, {  
                 method: "PUT",  
                 headers: {  
@@ -42,11 +42,11 @@ function Update({ reminder, onUpdate }) {
                 },  
                 body: JSON.stringify(payload),  
             });           
-        
+
             if (!response.ok) {    
                 throw new Error("Failed to update reminder");    
             }    
-        
+
             message.success("Reminder updated successfully!");    
             onUpdate({ ...reminder, ...values });    
         } catch (error) {    
@@ -54,11 +54,12 @@ function Update({ reminder, onUpdate }) {
             message.error("Failed to update reminder.");    
         }    
     }        
-  
+
     return (  
         <Form layout="vertical" onFinish={onFinish} form={form}>  
-            <Row gutter={16}>  
-                <Col span={12}>  
+        <h1> Update Reminder</h1>
+            <Row gutter={[16, 16]}>  
+                <Col xs={24} md={12}>  
                     <Form.Item  
                         label="Drug Name"  
                         name="medicine_name"  
@@ -66,7 +67,7 @@ function Update({ reminder, onUpdate }) {
                     >  
                         <Input placeholder="Drug Name" />  
                     </Form.Item>  
-  
+
                     <Form.Item  
                         label="Dosage"  
                         name="dosage"  
@@ -74,7 +75,7 @@ function Update({ reminder, onUpdate }) {
                     >  
                         <Input placeholder="Dosage" />  
                     </Form.Item>  
-  
+
                     <Form.Item  
                         label="Description of Use"  
                         name="description"  
@@ -83,8 +84,8 @@ function Update({ reminder, onUpdate }) {
                         <TextArea placeholder="Description of Use" rows={4} />  
                     </Form.Item>  
                 </Col>  
-  
-                <Col span={12}>  
+
+                <Col xs={24} md={12}>  
                     <Form.Item  
                         label="Frequency"  
                         name="frequency"  
@@ -92,7 +93,7 @@ function Update({ reminder, onUpdate }) {
                     >  
                         <Input placeholder="3 times a day" />  
                     </Form.Item>  
-  
+
                     <Form.Item  
                         label="Time"  
                         name="reminder_time"  
@@ -103,7 +104,7 @@ function Update({ reminder, onUpdate }) {
                             style={{ width: "100%" }}  
                         />  
                     </Form.Item>  
-  
+
                     <Form.Item  
                         label="Date Range"  
                         name="start_date"  
@@ -116,8 +117,8 @@ function Update({ reminder, onUpdate }) {
                     </Form.Item>  
                 </Col>  
             </Row>  
-  
-            <Form.Item>  
+
+            <Form.Item style={{ textAlign: "right" }}>  
                 <Button type="primary" htmlType="submit">  
                     Save  
                 </Button>  
@@ -125,5 +126,5 @@ function Update({ reminder, onUpdate }) {
         </Form>  
     );  
 }  
-  
-export default Update;  
+
+export default Update;
